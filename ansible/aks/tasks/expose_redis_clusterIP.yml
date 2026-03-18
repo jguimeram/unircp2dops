@@ -1,0 +1,15 @@
+- name: Expose Redis with ClusterIP
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: azure-vote-back
+        namespace: "{{ namespace_name }}"
+      spec:
+        type: ClusterIP
+        selector:
+          app: azure-vote-back
+        ports:
+          - port: 6379

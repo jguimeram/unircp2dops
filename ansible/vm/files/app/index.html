@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Weather & Time</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="glass-container">
+        <div class="time-section">
+            <h1 id="currentTime">00:00:00</h1>
+            <p id="currentDate">Loading date...</p>
+        </div>
+        
+        <div class="divider"></div>
+        
+        <div id="weatherSection" class="weather-section">
+            <div class="weather-info">
+                <span id="temp">--°C</span>
+                <span id="description">Fetching weather...</span>
+            </div>
+        </div>
+
+        <div class="status-monitor">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText">System: Initializing...</span>
+        </div>
+
+        <div class="controls">
+            <button id="refreshBtn">Refresh Weather</button>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for acr
+
+- name: Get ACR credentials
+  azure.azcollection.azure_rm_containerregistry_info:
+    name: acrcasopractico2
+    resource_group: "{{ acr_login_server }}"
+    retrieve_credentials: true
+
+- name: Login Podman to ACR
+  containers.podman.podman_login:
+    registry: "{{ acr_user }}.azurecr.io"
+    username: "{{ acr_user }}"
+    password: "{{ acr_password }}"
+    authfile: ~/.config/containers/auth.json
+
+- name: Pull and push frontend image for k8n
+  containers.podman.podman_image:
+    name: docker.io/jsosa15/azure-vote-front
+    tag: v1
+    push: true
+    push_args:
+      dest: "{{ acr_name }}.azurecr.io/azure-vote-front:casopractico2"
+
+- name: Pull and push redis backend image for k8n
+  containers.podman.podman_image:
+    name: docker.io/jsosa15/redis
+    tag: 6.0.8
+    push: true
+    push_args:
+      dest: "{{ acr_name }}.azurecr.io/redis:casopractico2"
+
+- name: Pull the source image
+  containers.podman.podman_image:
+    name: docker.io/jguimeradev/ttt-app
+    tag: v1
+    push: true
+    push_args:
+      dest: "{{ acr_name }}.azurecr.io/ttt-app:casopractico2"

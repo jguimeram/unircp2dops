@@ -1,0 +1,15 @@
+- name: Create persistence (PVC) para el Backend
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: backend-pvc
+        namespace: "{{ namespace_name }}"
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi

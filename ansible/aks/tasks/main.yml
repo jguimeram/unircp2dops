@@ -1,0 +1,21 @@
+---
+- name: Get AKS credentials and save to kubeconfig
+  ansible.builtin.import_tasks: aks_get_credentials.yml
+
+- name: Create Namespace
+  ansible.builtin.import_tasks: create_namespace.yml
+
+- name: Create persistence (PVC) para el Backend
+  ansible.builtin.import_tasks: create_pvc.yml
+
+- name: Backend deployment
+  ansible.builtin.import_tasks: backend_deployment.yml
+
+- name: Expose Redis with ClusterIP
+  ansible.builtin.import_tasks: expose_redis_clusterIP.yml
+
+- name: Frontend deployment
+  ansible.builtin.import_tasks: frontend_deployment.yml
+
+- name: Create LoadBalancer Service
+  ansible.builtin.import_tasks: create_loadbalancer.yml

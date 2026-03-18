@@ -1,0 +1,41 @@
+- name: Backend deployment
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: azure-vote-back
+        namespace: "{{ namespace_name }}"
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            app: azure-vote-back
+        template:
+          metadata:
+            labels:
+              app: azure-vote-back
+          spec:
+            containers:
+              - name: redis
+                image: "{{ backend_image }}"
+                ports:
+                  - containerPort: 6379
+                env:
+                  - name: ALLOW_EMPTY_PASSWORD
+                    value: "yes"
+                resources:
+                  requests:
+                    cpu: "{{ backend_requests_cpu }}"
+                    memory: "{{ backend_requests_memory }}"
+                  limits:
+                    cpu: "{{ backend_limits_cpu }}"
+                    memory: "{{ backend_limits_memory }}"
+                volumeMounts:
+                  - name: redis-data
+                    mountPath: /data
+            volumes:
+              - name: redis-data
+                persistentVolumeClaim:
+                  claimName: backend-pvc

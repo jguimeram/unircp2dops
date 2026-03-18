@@ -1,0 +1,6 @@
+- name: Login Podman to ACR
+  containers.podman.podman_login:
+    registry: "{{ acr_user }}.azurecr.io"
+    username: "{{ acr_user }}"
+    password: "{{ acr_password }}"
+    #authfile: --authfile ~/.config/containers/auth.json

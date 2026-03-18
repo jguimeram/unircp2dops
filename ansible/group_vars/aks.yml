@@ -1,0 +1,1 @@
+ansible_python_interpreter: /home/debian/.local/share/pipx/venvs/ansible/bin/python

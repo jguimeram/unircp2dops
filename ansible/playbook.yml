@@ -1,0 +1,51 @@
+---
+- name: ACR AKS
+  hosts: localhost
+  vars_files: vars/secrets.yml
+  tasks:
+    - name: Role ACR
+      include_role:
+        name: acr
+
+- name: Virtual Machine
+  hosts: azure_vm
+  tags: create_vm
+  vars_files: vars/secrets.yml
+  become: true
+  tasks:
+    - name: Role VM
+      include_role:
+        name: vm
+
+- name: Deployment on AKS
+  hosts: aks
+  vars_files: vars/secrets.yml
+  tasks:
+    - name: Role AKS
+      include_role:
+        name: aks
+
+- name: Output vm public IP
+  hosts: localhost
+  vars_files: vars/secrets.yml
+  gather_facts: false
+  tasks:
+    - name: az network cmd
+      command: >
+        az network public-ip list 
+        --resource-group {{node_resource_group}}
+        --query "[1].{IP:ipAddress}"
+        --output yaml
+      register: aks_public_ip
+
+    - name: az vm fqdn
+      command: >
+        az network public-ip list 
+        --resource-group {{rg_name}} 
+        --query "[].dnsSettings.fqdn" 
+        -o yaml
+      register: dns_public_ip
+
+    - name: Show aks public ip
+      debug:
+        msg: "The aks public ip: {{aks_public_ip.stdout_lines}} The public ip is {{dns_public_ip.stdout_lines}}"

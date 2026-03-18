@@ -1,0 +1,18 @@
+#SPDX-License-Identifier: MIT-0
+---
+# vars file for aks
+namespace_name: "akscp2unir"
+acr_server: "{{ acr_user }}.azurecr.io"
+backend_image: "{{ acr_server }}/redis:casopractico2"
+frontend_image: "{{ acr_server }}/azure-vote-front:casopractico2"
+
+# Resource requests and limits
+backend_requests_cpu: "256m"
+backend_requests_memory: "256Mi"
+backend_limits_cpu: "512m"
+backend_limits_memory: "512Mi"
+
+frontend_requests_cpu: "100m"
+frontend_requests_memory: "128Mi"
+frontend_limits_cpu: "200m"
+frontend_limits_memory: "256Mi"

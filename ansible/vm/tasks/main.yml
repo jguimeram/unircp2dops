@@ -1,0 +1,42 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for vm
+
+- name: update and upgrade system
+  ansible.builtin.apt:
+    upgrade: dist
+    update_cache: yes
+
+- name: install podman
+  ansible.builtin.apt:
+    name: podman
+    state: latest
+    update-cache: yes
+
+- name: Login Podman to ACR
+  containers.podman.podman_login:
+    registry: "{{ acr_user }}.azurecr.io"
+    username: "{{ acr_user }}"
+    password: "{{ acr_password }}"
+
+- name: Pull an image from Azure Registry
+  containers.podman.podman_image:
+    name: "{{ acr_name }}.azurecr.io/ttt-app:casopractico2"
+
+- name: Run app container
+  containers.podman.podman_container:
+    name: ttt-app
+    image: "{{ acr_name }}.azurecr.io/ttt-app:casopractico2"
+    state: started
+    ports: "80:80"
+
+- name: Reload systemd
+  systemd:
+    daemon_reload: yes
+
+- name: Verify container status
+  command: podman ps
+  register: podman_output
+
+- debug:
+    var: podman_output.stdout_lines

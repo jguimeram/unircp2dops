@@ -1,0 +1,34 @@
+- name: Frontend deployment
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: azure-vote-front
+        namespace: "{{ namespace_name }}"
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            app: azure-vote-front
+        template:
+          metadata:
+            labels:
+              app: azure-vote-front
+          spec:
+            containers:
+              - name: azure-vote-front
+                image: "{{ frontend_image }}"
+                ports:
+                  - containerPort: 80
+                resources:
+                  requests:
+                    cpu: "{{ frontend_requests_cpu }}"
+                    memory: "{{ frontend_requests_memory }}"
+                  limits:
+                    cpu: "{{ frontend_limits_cpu }}"
+                    memory: "{{ frontend_limits_memory }}"
+                env:
+                  - name: REDIS # redis_server = os.environ['REDIS']
+                    value: "azure-vote-back"
