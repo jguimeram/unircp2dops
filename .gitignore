@@ -16,3 +16,4 @@ ansible/secrets.yml
 docs
 scripts
 DOC*.md
+docs.md
