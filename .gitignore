@@ -8,7 +8,6 @@ terraform/*.tmpl
 ansible/vm.json
 ansible/inventory.yaml
 ansible/secrets.yml
-ansible/vars/
 .terraform/
 *.tfstate
 *.tfstate.*
