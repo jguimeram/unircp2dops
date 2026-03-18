@@ -3,8 +3,6 @@
 ![Licencia](https://img.shields.io/badge/licencia-MIT-blue.svg)
 ![Lenguaje](https://img.shields.io/badge/lenguaje-HCL%20%7C%20YAML%20%7C%20Shell-informational.svg)
 
-> **devopsunircp2** es un proyecto integral de DevOps que automatiza el despliegue de una aplicación contenedorizada en Azure Kubernetes Service (AKS). Utiliza Terraform como Infraestructura como Código (IaC) para aprovisionar recursos en Azure, incluyendo clústeres de AKS, Azure Container Registry (ACR) y Máquinas Virtuales. Ansible se encarga de la gestión de la configuración y el despliegue de la aplicación, manejando la configuración de espacios de nombres (namespaces) de Kubernetes, despliegues, servicios (LoadBalancer) y clústeres de Redis.
-
 ## ✨ Características
 
 - Aprovisionamiento de infraestructura en Azure mediante Terraform (HCL).
