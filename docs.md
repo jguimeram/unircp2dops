@@ -32,6 +32,13 @@ El resultado es una ejecución automatizada sin intervención manual en cada fas
 El código fuente completo está disponible en el siguiente repositorio:
 **URL:** [https://github.com/jaumeguimera/devopsunircp2](https://github.com/jaumeguimera/devopsunircp2)
 
+### **1.1.1 Estructura de Ramas**
+
+El repositorio se organiza en dos ramas principales para este caso práctico:
+
+*   **`master`**: Rama principal con la configuración base y la infraestructura completa.
+*   **`features`**: Esta rama incluye una versión especial del archivo `ansible/vars/secrets.yml`. A diferencia de la rama master donde el archivo está ignorado por seguridad, en esta rama el archivo está presente pero sus valores reales han sido enmascarados con asteriscos (`*`) para permitir su visualización en GitHub sin comprometer la seguridad de la infraestructura.
+
 ## **1.2 Arquitectura de Despliegue**
 
 A continuación se muestra el flujo de trabajo y la relación entre los distintos componentes del proyecto:
