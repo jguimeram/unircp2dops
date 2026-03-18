@@ -37,6 +37,5 @@
 - name: Verify container status
   command: podman ps
   register: podman_output
-
 - debug:
     var: podman_output.stdout_lines

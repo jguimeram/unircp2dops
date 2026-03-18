@@ -1,4 +1,3 @@
-# Network
 resource "azurerm_virtual_network" "vnet" {
   name                = "vnet-${local.tag_name}"
   resource_group_name = azurerm_resource_group.rg.name
@@ -7,7 +6,7 @@ resource "azurerm_virtual_network" "vnet" {
   tags                = { environment = "${local.tag_name}" }
 }
 
-# Subnet
+
 
 resource "azurerm_subnet" "snet" {
   name                 = "snet-${local.tag_name}"
@@ -16,14 +15,13 @@ resource "azurerm_subnet" "snet" {
   address_prefixes     = ["10.0.1.0/24"]
 }
 
-# Network security group
+
 
 resource "azurerm_network_security_group" "nsg" {
   name                = "nsg-${local.tag_name}"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
 
-  //ssh connection from allowing inbound graffic on any ephimeral port
 
   security_rule {
     name                       = "ssh"
@@ -52,13 +50,12 @@ resource "azurerm_network_security_group" "nsg" {
   tags = { environment = "${local.tag_name}" }
 }
 
-# Binds the network security group to the subnet
+
 resource "azurerm_subnet_network_security_group_association" "nsg-snet" {
   subnet_id                 = azurerm_subnet.snet.id
   network_security_group_id = azurerm_network_security_group.nsg.id
 }
 
-# Public ip
 
 resource "azurerm_public_ip" "pip" {
   name                = "pip-${local.tag_name}"
@@ -72,7 +69,6 @@ resource "azurerm_public_ip" "pip" {
   }
 }
 
-# NIC
 
 resource "azurerm_network_interface" "nic" {
   name                = "nic-${local.tag_name}"
@@ -88,7 +84,6 @@ resource "azurerm_network_interface" "nic" {
 
 }
 
-# Set ssh files
 
 resource "tls_private_key" "ssh_key" {
   algorithm = "RSA"
@@ -105,9 +100,6 @@ resource "local_file" "public_key" {
   content  = tls_private_key.ssh_key.public_key_openssh
   filename = pathexpand("~/.ssh/vm1.pub")
 }
-
-
-# Virtual Machine
 
 
 resource "azurerm_linux_virtual_machine" "vm1" {
